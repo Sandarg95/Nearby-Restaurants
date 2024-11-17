@@ -88,18 +88,23 @@ export default function FindRestaurants() {
               pinColor="blue"
             />
 
-            {/* Markers for nearby restaurants */}
             {restaurants.map((restaurant, index) => (
-              <Marker
-                key={index}
-                title={restaurant.name}
-                description={restaurant.vicinity || "Address not available"}
-                coordinate={{
-                  latitude: restaurant.geometry.location.lat,
-                  longitude: restaurant.geometry.location.lng,
-                }}
-              />
+              restaurant.geometry &&
+              restaurant.geometry.location &&
+              typeof restaurant.geometry.location.lat === 'number' &&
+              typeof restaurant.geometry.location.lng === 'number' ? (
+                <Marker
+                  key={index}
+                  title={restaurant.name}
+                  description={restaurant.vicinity || "Address not available"}
+                  coordinate={{
+                    latitude: restaurant.geometry.location.lat,
+                    longitude: restaurant.geometry.location.lng,
+                  }}
+                />
+              ) : null
             ))}
+
           </MapView>
         </>
       ) : (
